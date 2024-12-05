@@ -24,9 +24,25 @@ public class AmbulanceModel {
 		return ambulance;
 	}
 
-	public void addAmbulance (int id, String plateNum, int status) throws  SQLException {
+	public void addAmbulance(int id, String plateNum, int status) throws  SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
 			String statement = "INSERT INTO ambulance (amb_id, amb_platenum, amb_status) VALUES (%d, %s, %d)".formatted(id, plateNum, status);
+
+			con.prepareStatement(statement).execute();
+		}
+	}
+
+	public  void deleteAmbulance(int ambId) throws SQLException {
+		try (Connection con = DBModel.getDBConnection()) {
+			String statement = "DELETE FROM ambulance WHERE amb_id = %d".formatted(ambId);
+
+			con.prepareStatement(statement).execute();
+		}
+	}
+
+	public  void deleteAmbulance(String plateNum) throws SQLException {
+		try (Connection con = DBModel.getDBConnection()) {
+			String statement = "DELETE FROM ambulance WHERE amb_platenum = %s".formatted(plateNum);
 
 			con.prepareStatement(statement).execute();
 		}
