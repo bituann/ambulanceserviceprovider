@@ -1,5 +1,7 @@
 package com.example.ambulanceserviceprovider.models;
 
+import com.example.ambulanceserviceprovider.datatypes.User;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel {
-	private List<String> usertype;
-
 	public User getUser(String email) throws SQLException {
 		User user;
 
@@ -17,6 +17,8 @@ public class UserModel {
 			ResultSet result = con.prepareStatement(statement).executeQuery();
 
 			user = new User();
+
+			result.next();
 
 			user.setId(result.getInt("user_id"));
 			user.setName(result.getString("user_name"));
@@ -56,53 +58,5 @@ public class UserModel {
 
 			con.prepareStatement(statement).execute();
 		}
-	}
-}
-
-class User {
-	private int id;
-	private String name;
-	private String phoneNum;
-	private String email;
-	private int type;
-
-	public int getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setType(int type) {
-		this.type = type;
 	}
 }
