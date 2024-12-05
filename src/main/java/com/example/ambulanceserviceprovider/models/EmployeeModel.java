@@ -60,4 +60,13 @@ public class EmployeeModel {
 
 		return employees;
 	}
+
+	public void addEmployee(String fName, String lName, String email, String phoneNum, String address, int status, int type, String password) throws SQLException {
+		try (Connection con = DBModel.getDBConnection()) {
+			String statement = "INSERT INTO employee(emp_firstname, emp_lastname, emp_email, emp_phonenum, emp_address, emp_status, emp_type, emp_password" +
+					"VALUES (%s, %s, %s, %s, %s, %d, %d, %s".formatted(fName, lName, email, phoneNum, address, status, type, password);
+
+			con.prepareStatement(statement).execute();
+		}
+	}
 }
