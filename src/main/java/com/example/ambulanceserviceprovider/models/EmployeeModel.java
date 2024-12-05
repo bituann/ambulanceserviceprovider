@@ -69,4 +69,12 @@ public class EmployeeModel {
 			con.prepareStatement(statement).execute();
 		}
 	}
+
+	public void deleteEmployee(int empId) throws SQLException {
+		try (Connection con = DBModel.getDBConnection()) {
+			String statement = "DELETE FROM employee WHERE emp_id = %d".formatted(empId);
+
+			con.prepareStatement(statement).execute();
+		}
+	}
 }
