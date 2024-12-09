@@ -10,6 +10,7 @@ public class Emergency {
 	private LocalDate date;
 	private String location;
 	private LocalTime time;
+	private int userId;
 
 	public int getId() {
 		return id;
@@ -35,6 +36,10 @@ public class Emergency {
 		return time;
 	}
 
+	public int getUserId() {
+		return userId;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -57,5 +62,9 @@ public class Emergency {
 
 	public void setTime(LocalTime time) {
 		this.time = time;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }
