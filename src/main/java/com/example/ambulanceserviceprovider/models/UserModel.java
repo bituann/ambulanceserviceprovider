@@ -52,9 +52,9 @@ public class UserModel {
 		return users;
 	}
 
-	public void addUser (String name, String email, String phoneno, int type) throws SQLException {
+	public void addUser (String name, String email, String phonenum, int type) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
-			String statement = "INSERT INTO appuser (user_name, user_email, user_phonenum, user_type) VALUES (%s, %s, %s, %d)".formatted(name, email, phoneno, type);
+			String statement = "INSERT INTO appuser (user_name, user_email, user_phonenum, user_type) VALUES (%s, %s, %s, %d)".formatted(name, email, phonenum, type);
 
 			con.prepareStatement(statement).execute();
 		}

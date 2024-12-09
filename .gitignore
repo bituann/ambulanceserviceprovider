@@ -5,6 +5,7 @@ target/
 
 ### Custom ###
 src/main/java/com/example/ambulanceserviceprovider/models/DBModel.java
+src/main/java/com/example/ambulanceserviceprovider/controllers/TestController.java
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
