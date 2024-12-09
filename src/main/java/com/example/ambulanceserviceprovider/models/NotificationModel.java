@@ -47,4 +47,12 @@ public class NotificationModel {
 
 		return notifications;
 	}
+
+	public void addNotification (int userId, String title) throws SQLException {
+		try (Connection con = DBModel.getDBConnection()) {
+			String statement = "INSERT INTO notification ('notif_userid', 'notif_title') VALUES (%d, %s)".formatted(userId, title);
+
+			con.prepareStatement(statement).execute();
+		}
+	}
 }
