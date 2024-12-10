@@ -27,7 +27,12 @@ public class PersonnelGroupModel {
 		return personnelGroup;
 	}
 
-	public void addPersonnelGroup(int doctorId, int attendeeOneId, int attendeeTwoId, int driverId) {
-		
+	public void addPersonnelGroup(int doctorId, int attendeeOneId, int attendeeTwoId, int driverId) throws SQLException {
+		try (Connection con = DBModel.getDBConnection()) {
+			String statement = "INSERT INTO personnelgroup (persgroup_doctor, persgroup_attendeeone, persgroup_attendeetwo, persgroup_driver" +
+					"VALUES (%d, %d, %d, %d)".formatted(doctorId, attendeeOneId, attendeeTwoId, driverId);
+
+			con.prepareStatement(statement).execute();
+		}
 	}
 }
