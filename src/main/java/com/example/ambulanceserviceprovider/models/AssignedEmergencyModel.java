@@ -3,8 +3,11 @@ package com.example.ambulanceserviceprovider.models;
 import com.example.ambulanceserviceprovider.datatypes.AssignedEmergency;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,5 +58,17 @@ public class AssignedEmergencyModel {
 		}
 
 		return assignedEmergencies;
+	}
+
+	public void addAssignedEmergency (int emerId, int ambId, int persgrpId, int status, LocalDate date, LocalTime time) throws SQLException {
+		try (Connection con = DBModel.getDBConnection()) {
+			String statement = "INSERT INTO assignedemergency (assemer_emergencyid, assemer_ambulanceid, assemer_personnelid, assemer_status, assemer_datehandled, assemer_timehandled)" +
+					" VALUES (%d, %d, %d, %d, ?, ?)".formatted(emerId, ambId, persgrpId, status);
+
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+			preparedStatement.setObject(1, date);
+			preparedStatement.setObject(2, time);
+			preparedStatement.execute();
+		}
 	}
 }
