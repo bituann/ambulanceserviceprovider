@@ -21,10 +21,10 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <TextField maxWidth="500.0" prefHeight="25.0" prefWidth="363.0" promptText="Full Name" VBox.vgrow="NEVER" />
-            <TextField maxWidth="500.0" prefHeight="25.0" prefWidth="363.0" promptText="Phone Number" VBox.vgrow="NEVER" />
-            <TextField maxWidth="500.0" prefHeight="25.0" prefWidth="500.0" promptText="Email" VBox.vgrow="NEVER" />
-            <ComboBox fx:id="userType" maxWidth="500.0" prefHeight="27.0" prefWidth="596.0" />
+            <TextField fx:id="signUpName" maxWidth="500.0" prefHeight="25.0" prefWidth="363.0" promptText="Full Name" VBox.vgrow="NEVER" />
+            <TextField fx:id="signUpPhoneNum" maxWidth="500.0" prefHeight="25.0" prefWidth="363.0" promptText="Phone Number" VBox.vgrow="NEVER" />
+            <TextField fx:id="signUpEmail" maxWidth="500.0" prefHeight="25.0" prefWidth="500.0" promptText="Email" VBox.vgrow="NEVER" />
+            <ComboBox fx:id="userType" maxWidth="500.0" prefHeight="27.0" prefWidth="596.0" promptText="Select a group..." />
             <HBox alignment="CENTER" VBox.vgrow="NEVER">
                <children>
                   <Button mnemonicParsing="false" onAction="#goBackButton" text="Go Back" />
