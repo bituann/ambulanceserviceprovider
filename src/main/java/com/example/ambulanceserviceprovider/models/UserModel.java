@@ -18,7 +18,9 @@ public class UserModel {
 
 			user = new User();
 
-			result.next();
+			if(!result.next()) {
+				return user;
+			};
 
 			user.setId(result.getInt("user_id"));
 			user.setName(result.getString("user_name"));
