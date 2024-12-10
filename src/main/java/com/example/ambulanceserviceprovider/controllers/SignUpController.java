@@ -2,6 +2,7 @@ package com.example.ambulanceserviceprovider.controllers;
 
 import com.example.ambulanceserviceprovider.HelloApplication;
 import com.example.ambulanceserviceprovider.datatypes.UserType;
+import com.example.ambulanceserviceprovider.models.UserModel;
 import com.example.ambulanceserviceprovider.models.UserTypeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,6 +27,15 @@ public class SignUpController implements Initializable {
 
 	@FXML
 	private ComboBox<String> userType;
+
+	@FXML
+	private TextField signUpName;
+
+	@FXML
+	private TextField signUpPhoneNum;
+
+	@FXML
+	private TextField signUpEmail;
 
 	@Override
 	public void initialize (URL url, ResourceBundle rb) {
@@ -54,6 +65,17 @@ public class SignUpController implements Initializable {
 	}
 
 	public void registerUserButton () {
+		String name = signUpName.getText();
+		String phoneNum = signUpPhoneNum.getText();
+		String email = signUpEmail.getText();
+		int uT = userType.getSelectionModel().getSelectedIndex();
 
+		try {
+			new UserModel().addUser(name, email, phoneNum, uT+1);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		System.out.println("Success");
 	}
 }
