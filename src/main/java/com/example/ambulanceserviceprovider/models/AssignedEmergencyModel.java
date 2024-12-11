@@ -63,11 +63,16 @@ public class AssignedEmergencyModel {
 	public void addAssignedEmergency (int emerId, int ambId, int persgrpId, int status, LocalDate date, LocalTime time) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
 			String statement = "INSERT INTO assignedemergency (assemer_emergencyid, assemer_ambulanceid, assemer_personnelid, assemer_status, assemer_datehandled, assemer_timehandled)" +
-					" VALUES (%d, %d, %d, %d, ?, ?)".formatted(emerId, ambId, persgrpId, status);
+					" VALUES (?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement preparedStatement = con.prepareStatement(statement);
-			preparedStatement.setObject(1, date);
-			preparedStatement.setObject(2, time);
+			preparedStatement.setInt(1, emerId);
+			preparedStatement.setInt(2, ambId);
+			preparedStatement.setInt(3, persgrpId);
+			preparedStatement.setInt(4, status);
+			preparedStatement.setObject(5, date);
+			preparedStatement.setObject(6, time);
+
 			preparedStatement.execute();
 		}
 	}
