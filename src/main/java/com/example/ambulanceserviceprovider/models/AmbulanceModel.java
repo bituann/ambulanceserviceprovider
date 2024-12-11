@@ -3,6 +3,7 @@ package com.example.ambulanceserviceprovider.models;
 import com.example.ambulanceserviceprovider.datatypes.Ambulance;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -26,25 +27,39 @@ public class AmbulanceModel {
 
 	public void addAmbulance(int id, String plateNum, int status) throws  SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
-			String statement = "INSERT INTO ambulance (amb_id, amb_platenum, amb_status) VALUES (%d, %s, %d)".formatted(id, plateNum, status);
+			String statement = "INSERT INTO ambulance (amb_id, amb_platenum, amb_status) VALUES (?, ?, ?)";
 
-			con.prepareStatement(statement).execute();
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+
+			preparedStatement.setInt(1, id);
+			preparedStatement.setString(2, plateNum);
+			preparedStatement.setInt(3, status);
+
+			preparedStatement.execute();
 		}
 	}
 
 	public  void deleteAmbulance(int ambId) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
-			String statement = "DELETE FROM ambulance WHERE amb_id = %d".formatted(ambId);
+			String statement = "DELETE FROM ambulance WHERE amb_id = ?";
 
-			con.prepareStatement(statement).execute();
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+
+			preparedStatement.setInt(1, ambId);
+
+			preparedStatement.execute();
 		}
 	}
 
 	public  void deleteAmbulance(String plateNum) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
-			String statement = "DELETE FROM ambulance WHERE amb_platenum = %s".formatted(plateNum);
+			String statement = "DELETE FROM ambulance WHERE amb_platenum = ?";
 
-			con.prepareStatement(statement).execute();
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+
+			preparedStatement.setString(1, plateNum);
+
+			preparedStatement.execute();
 		}
 	}
 }
