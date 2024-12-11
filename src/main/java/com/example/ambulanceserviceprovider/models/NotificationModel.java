@@ -2,10 +2,7 @@ package com.example.ambulanceserviceprovider.models;
 
 import com.example.ambulanceserviceprovider.datatypes.Notification;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +47,14 @@ public class NotificationModel {
 
 	public void addNotification (int userId, String title) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
-			String statement = "INSERT INTO notification ('notif_userid', 'notif_title') VALUES (%d, %s)".formatted(userId, title);
+			String statement = "INSERT INTO notification ('notif_userid', 'notif_title') VALUES (?, ?)";
 
-			con.prepareStatement(statement).execute();
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+
+			preparedStatement.setInt(1, userId);
+			preparedStatement.setString(2, title);
+
+			preparedStatement.execute();
 		}
 	}
 }

@@ -3,6 +3,7 @@ package com.example.ambulanceserviceprovider.models;
 import com.example.ambulanceserviceprovider.datatypes.Employee;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,17 +65,32 @@ public class EmployeeModel {
 	public void addEmployee(String fName, String lName, String email, String phoneNum, String address, int status, int type, String password) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
 			String statement = "INSERT INTO employee(emp_firstname, emp_lastname, emp_email, emp_phonenum, emp_address, emp_status, emp_type, emp_password" +
-					"VALUES (%s, %s, %s, %s, %s, %d, %d, %s".formatted(fName, lName, email, phoneNum, address, status, type, password);
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-			con.prepareStatement(statement).execute();
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+
+			preparedStatement.setString(1, fName);
+			preparedStatement.setString(2, lName);
+			preparedStatement.setString(3, email);
+			preparedStatement.setString(4, phoneNum);
+			preparedStatement.setString(5, address);
+			preparedStatement.setInt(6, status);
+			preparedStatement.setInt(7, type);
+			preparedStatement.setString(8, password);
+
+			preparedStatement.execute();
 		}
 	}
 
 	public void deleteEmployee(int empId) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
-			String statement = "DELETE FROM employee WHERE emp_id = %d".formatted(empId);
+			String statement = "DELETE FROM employee WHERE emp_id = ?";
 
-			con.prepareStatement(statement).execute();
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+
+			preparedStatement.setInt(1, empId);
+
+			preparedStatement.execute();
 		}
 	}
 }

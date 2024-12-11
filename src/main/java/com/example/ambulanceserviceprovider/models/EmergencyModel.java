@@ -61,11 +61,15 @@ public class EmergencyModel {
 	public void addEmergency (String title, String desc, LocalDate date, String location, LocalTime time, int userId) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
 			String statement = "INSERT INTO emergency (emer_title, emer_desc, emer_date, emer_location, emer_time, emer_userid)" +
-					"VALUES (%s, %s, ?, %s, ?, %d)".formatted(title, desc, location, userId);
+					"VALUES (?, ?, ?, ?, ?, ?)".formatted(title, desc, location, userId);
 
 			PreparedStatement preparedStatement = con.prepareStatement(statement);
-			preparedStatement.setObject(1, date);
-			preparedStatement.setObject(2, time);
+			preparedStatement.setString(1, title);
+			preparedStatement.setString(2, desc);
+			preparedStatement.setObject(3, date);
+			preparedStatement.setString(3, location);
+			preparedStatement.setObject(5, time);
+			preparedStatement.setInt(6, userId);
 
 			preparedStatement.execute();
 		}

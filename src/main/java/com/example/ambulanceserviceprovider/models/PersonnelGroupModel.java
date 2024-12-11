@@ -3,6 +3,7 @@ package com.example.ambulanceserviceprovider.models;
 import com.example.ambulanceserviceprovider.datatypes.PersonnelGroup;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -30,9 +31,16 @@ public class PersonnelGroupModel {
 	public void addPersonnelGroup(int doctorId, int attendeeOneId, int attendeeTwoId, int driverId) throws SQLException {
 		try (Connection con = DBModel.getDBConnection()) {
 			String statement = "INSERT INTO personnelgroup (persgroup_doctor, persgroup_attendeeone, persgroup_attendeetwo, persgroup_driver" +
-					"VALUES (%d, %d, %d, %d)".formatted(doctorId, attendeeOneId, attendeeTwoId, driverId);
+					"VALUES (?, ?, ?, ?)";
 
-			con.prepareStatement(statement).execute();
+			PreparedStatement preparedStatement = con.prepareStatement(statement);
+
+			preparedStatement.setInt(1, doctorId);
+			preparedStatement.setInt(2, attendeeOneId);
+			preparedStatement.setInt(3, attendeeTwoId);
+			preparedStatement.setInt(4, driverId);
+
+			preparedStatement.execute();
 		}
 	}
 }
