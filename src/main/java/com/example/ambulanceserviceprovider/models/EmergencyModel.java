@@ -19,7 +19,9 @@ public class EmergencyModel {
 			String statement = "SELECT * FROM emergency WHERE emer_id = %d".formatted(id);
 			ResultSet result = con.prepareStatement(statement).executeQuery();
 
-			result.next();
+			if (!result.next()) {
+				return null;
+			}
 
 			emergency.setId(result.getInt("emer_id"));
 			emergency.setTitle(result.getString("emer_title"));
@@ -53,6 +55,10 @@ public class EmergencyModel {
 
 				emergencies.add(emergency);
 			}
+		}
+
+		if (emergencies.isEmpty()) {
+			return null;
 		}
 
 		return emergencies;

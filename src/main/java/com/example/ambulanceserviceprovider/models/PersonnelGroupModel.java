@@ -16,7 +16,9 @@ public class PersonnelGroupModel {
 
 			ResultSet result = con.prepareStatement(statement).executeQuery();
 
-			result.next();
+			if (!result.next()) {
+				return null;
+			}
 
 			personnelGroup.setId(result.getInt("persgroup_id"));
 			personnelGroup.setDoctorId(result.getInt("persgroup_doctor"));

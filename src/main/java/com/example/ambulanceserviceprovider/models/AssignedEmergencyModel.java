@@ -20,7 +20,9 @@ public class AssignedEmergencyModel {
 
 			ResultSet result = con.prepareStatement(statement).executeQuery();
 
-			result.next();
+			if(!result.next()) {
+				return null;
+			}
 
 			assignedEmergency.setId(result.getInt("assemer_id"));
 			assignedEmergency.setEmergencyId(result.getInt("assemer_emergencyid"));
@@ -55,6 +57,10 @@ public class AssignedEmergencyModel {
 
 				assignedEmergencies.add(assignedEmergency);
 			}
+		}
+
+		if(assignedEmergencies.isEmpty()) {
+			return null;
 		}
 
 		return assignedEmergencies;

@@ -52,6 +52,10 @@ public class UserModel {
 			}
 		}
 
+		if (users.isEmpty()) {
+			return null;
+		}
+		
 		return users;
 	}
 

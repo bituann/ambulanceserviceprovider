@@ -19,7 +19,9 @@ public class EmployeeModel {
 
 			employee = new Employee();
 
-			result.next();
+			if (!result.next()) {
+				return null;
+			}
 
 			employee.setId(result.getInt("emp_id"));
 			employee.setFirstName(result.getString("emp_firstname"));
@@ -59,6 +61,10 @@ public class EmployeeModel {
 			}
 		}
 
+		if (employees.isEmpty()) {
+			return null;
+		}
+		
 		return employees;
 	}
 

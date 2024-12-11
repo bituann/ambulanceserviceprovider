@@ -15,7 +15,9 @@ public class AmbulanceModel {
 			String statement = "SELECT * FROM ambulance WHERE amb_id = %d".formatted(ambId);
 			ResultSet result = con.prepareStatement(statement).executeQuery();
 
-			result.next();
+			if (!result.next()) {
+				return null;
+			}
 
 			ambulance.setId(result.getInt("amb_id"));
 			ambulance.setPlatenum(result.getString("amb_platenum"));

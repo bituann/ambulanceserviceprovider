@@ -46,6 +46,10 @@ public class UserTypeModel {
 			}
 		}
 
+		if (userTypes.isEmpty()) {
+			return null;
+		}
+
 		return userTypes;
 	}
 }

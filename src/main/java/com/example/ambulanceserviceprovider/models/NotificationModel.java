@@ -14,7 +14,9 @@ public class NotificationModel {
 			String statement = "SELECT * FROM notification WHERE notif_id = %d".formatted(id);
 			ResultSet result = con.prepareStatement(statement).executeQuery();
 
-			result.next();
+			if (!result.next()) {
+				return null;
+			}
 
 			notification.setId(result.getInt("notif_id"));
 			notification.setUserId(result.getInt("notif_userid"));
@@ -40,6 +42,10 @@ public class NotificationModel {
 
 				notifications.add(notification);
 			}
+		}
+
+		if (notifications.isEmpty()) {
+			return null;
 		}
 
 		return notifications;
