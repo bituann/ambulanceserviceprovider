@@ -12,5 +12,6 @@ module com.example.ambulanceserviceprovider {
 	requires java.sql;
 
 	opens com.example.ambulanceserviceprovider to javafx.fxml;
+	opens com.example.ambulanceserviceprovider.controllers to javafx.fxml;
 	exports com.example.ambulanceserviceprovider;
 }
