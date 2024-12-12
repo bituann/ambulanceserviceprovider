@@ -56,15 +56,10 @@ public class SignUpController implements Initializable {
 
 	public void goBackButton(ActionEvent event) throws IOException {
 		Parent signUpParent = FXMLLoader.load(HelloApplication.class.getResource("signin.fxml"));
-		Scene signUpScene = new Scene(signUpParent);
-
-		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-		window.setScene(signUpScene);
-		window.show();
+		changeScene(signUpParent, event);
 	}
 
-	public void registerUserButton () {
+	public void registerUserButton (ActionEvent event) throws IOException, SQLException {
 		String name = signUpName.getText();
 		String phoneNum = signUpPhoneNum.getText();
 		String email = signUpEmail.getText();
@@ -76,6 +71,22 @@ public class SignUpController implements Initializable {
 			throw new RuntimeException(e);
 		}
 
-		System.out.println("Success");
+		FXMLLoader dashboardLoader = new FXMLLoader(HelloApplication.class.getResource("userdashboard.fxml"));
+		Parent dashboardParent = dashboardLoader.load();
+
+		UserDashboardController dashboardController = dashboardLoader.getController();
+		dashboardController.setUserName(new UserModel().getUser(email).getName());
+		dashboardController.setUserEmail(email);
+
+		changeScene(dashboardParent, event);
+	}
+
+	private void changeScene (Parent parent, ActionEvent event) throws IOException {
+		Scene signUpScene = new Scene(parent);
+
+		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+		window.setScene(signUpScene);
+		window.show();
 	}
 }
