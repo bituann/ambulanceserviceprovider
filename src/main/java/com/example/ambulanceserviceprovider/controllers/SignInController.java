@@ -10,28 +10,38 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class SignInController {
 	@FXML
 	private TextField signInEmail;
 	private final UserModel userModel = new UserModel();
 
-	public void signIn () {
+	public void signIn (ActionEvent event) throws IOException {
 		String email = signInEmail.getText();
 
 		try {
 			User user = userModel.getUser(email);
 
-			if (Objects.equals(user.getEmail(), email)) {
-				System.out.println("Success");
+			if (user != null) {
+				FXMLLoader dashboardLoader = new FXMLLoader(HelloApplication.class.getResource("userdashboard.fxml"));
+				Parent dashboardParent = dashboardLoader.load();
+
+//				To pass the email & name to the user dashboard page
+				UserDashboardController dashboardController = dashboardLoader.getController();
+				dashboardController.setUserEmail(email);
+				dashboardController.setUserName(userModel.getUser(email).getName());
+
+//				Load dashboard
+				Scene signUpScene = new Scene(dashboardParent);
+				Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+				window.setScene(signUpScene);
+				window.show();
+
 			} else {
 				System.out.println("Fail");
 			}
