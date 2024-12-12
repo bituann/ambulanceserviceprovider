@@ -2,6 +2,7 @@ package com.example.ambulanceserviceprovider.controllers;
 
 import com.example.ambulanceserviceprovider.HelloApplication;
 import com.example.ambulanceserviceprovider.datatypes.User;
+import com.example.ambulanceserviceprovider.models.EmergencyModel;
 import com.example.ambulanceserviceprovider.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,22 +12,39 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 
 public class UserDashboardController {
-	private User user;
+	private final UserModel userModel = new UserModel();
+	private final EmergencyModel emergencyModel = new EmergencyModel();
 
 	@FXML
 	private Label userName;
 
 	@FXML
 	private Label userEmail;
+
+	@FXML
+	private TextField requestTitle;
+
+	@FXML
+	private TextField requestDesc;
+
+	@FXML
+	private TextField requestLocation;
+
+	@FXML
+	private TextField requestOutcomeMessage;
 
 	public void setUserName(String name) {
 		userName.setText(name);
@@ -40,6 +58,23 @@ public class UserDashboardController {
 		Parent signInParent = FXMLLoader.load(HelloApplication.class.getResource("signin.fxml"));
 
 		changeScene(signInParent, event);
+	}
+
+	public void requestAmbulanceButton() throws SQLException {
+		String email = userEmail.getText();
+
+		String title = requestTitle.getText();
+		String desc = requestDesc.getText();
+		String location = requestLocation.getText();
+		User user = userModel.getUser(email);
+
+		emergencyModel.addEmergency(title, desc, location, LocalDate.now(), LocalTime.now(), user.getId());
+
+		requestOutcomeMessage.setText("Success! \n An ambulance will be with you shortly!");
+
+		requestTitle.clear();
+		requestDesc.clear();
+		requestLocation.clear();
 	}
 
 	private void changeScene (Parent parent, ActionEvent event) throws IOException {
