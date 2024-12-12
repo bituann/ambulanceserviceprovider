@@ -20,7 +20,7 @@ public class UserModel {
 			user = new User();
 
 			if(!result.next()) {
-				return user;
+				return null;
 			};
 
 			user.setId(result.getInt("user_id"));
