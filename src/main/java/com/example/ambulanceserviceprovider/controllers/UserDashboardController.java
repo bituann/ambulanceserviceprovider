@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,6 +43,9 @@ public class UserDashboardController {
 	@FXML
 	private TextField requestOutcomeMessage;
 
+	@FXML
+	private BorderPane basePane;
+
 	public void setUserName(String name) {
 		userName.setText(name);
 	}
@@ -50,10 +54,11 @@ public class UserDashboardController {
 		userEmail.setText(email);
 	}
 
-	public void logOut(ActionEvent event) throws IOException {
+	public void logOut() throws IOException {
 		Parent signInParent = FXMLLoader.load(Ambex.class.getResource("signin.fxml"));
 
-		changeScene(signInParent, event);
+		basePane.getChildren().clear();
+		basePane.setCenter(signInParent);
 	}
 
 	public void requestAmbulanceButton() throws SQLException {
@@ -64,6 +69,12 @@ public class UserDashboardController {
 		String location = requestLocation.getText();
 		User user = userModel.getUser(email);
 
+		if(title.isBlank() || location.isBlank()) {
+			requestOutcomeMessage.setText("Please enter the emergency details!");
+
+			return;
+		}
+
 		emergencyModel.addEmergency(title, desc, location, LocalDate.now(), LocalTime.now(), user.getId());
 
 		requestOutcomeMessage.setText("Success! \n An ambulance will be with you shortly!");
@@ -71,14 +82,5 @@ public class UserDashboardController {
 		requestTitle.clear();
 		requestDesc.clear();
 		requestLocation.clear();
-	}
-
-	private void changeScene (Parent parent, ActionEvent event) throws IOException {
-		Scene signUpScene = new Scene(parent);
-
-		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-		window.setScene(signUpScene);
-		window.show();
 	}
 }
