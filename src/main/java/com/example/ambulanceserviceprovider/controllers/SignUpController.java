@@ -1,6 +1,6 @@
 package com.example.ambulanceserviceprovider.controllers;
 
-import com.example.ambulanceserviceprovider.HelloApplication;
+import com.example.ambulanceserviceprovider.Ambex;
 import com.example.ambulanceserviceprovider.datatypes.UserType;
 import com.example.ambulanceserviceprovider.models.UserModel;
 import com.example.ambulanceserviceprovider.models.UserTypeModel;
@@ -55,7 +55,7 @@ public class SignUpController implements Initializable {
 	}
 
 	public void goBackButton(ActionEvent event) throws IOException {
-		Parent signUpParent = FXMLLoader.load(HelloApplication.class.getResource("signin.fxml"));
+		Parent signUpParent = FXMLLoader.load(Ambex.class.getResource("signin.fxml"));
 		changeScene(signUpParent, event);
 	}
 
@@ -71,7 +71,7 @@ public class SignUpController implements Initializable {
 			throw new RuntimeException(e);
 		}
 
-		FXMLLoader dashboardLoader = new FXMLLoader(HelloApplication.class.getResource("userdashboard.fxml"));
+		FXMLLoader dashboardLoader = new FXMLLoader(Ambex.class.getResource("userdashboard.fxml"));
 		Parent dashboardParent = dashboardLoader.load();
 
 		UserDashboardController dashboardController = dashboardLoader.getController();
