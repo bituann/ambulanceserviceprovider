@@ -43,10 +43,8 @@ public class SignInController {
 				dashboardController.setUserName(userModel.getUser(email).getName());
 
 //				Load dashboard
-				Scene signUpScene = new Scene(dashboardParent);
-				Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-				window.setScene(signUpScene);
-				window.show();
+				basePane.getChildren().clear();
+				basePane.setCenter(dashboardParent);
 
 			} else {
 				System.out.println("Fail");
