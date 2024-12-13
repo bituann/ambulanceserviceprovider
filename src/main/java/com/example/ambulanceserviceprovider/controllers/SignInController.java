@@ -1,6 +1,6 @@
 package com.example.ambulanceserviceprovider.controllers;
 
-import com.example.ambulanceserviceprovider.HelloApplication;
+import com.example.ambulanceserviceprovider.Ambex;
 import com.example.ambulanceserviceprovider.datatypes.*;
 import com.example.ambulanceserviceprovider.models.UserModel;
 
@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +21,10 @@ import java.sql.SQLException;
 public class SignInController {
 	@FXML
 	private TextField signInEmail;
+
+	@FXML
+	private BorderPane basePane;
+
 	private final UserModel userModel = new UserModel();
 
 	public void signIn (ActionEvent event) throws IOException {
@@ -28,7 +34,7 @@ public class SignInController {
 			User user = userModel.getUser(email);
 
 			if (user != null) {
-				FXMLLoader dashboardLoader = new FXMLLoader(HelloApplication.class.getResource("userdashboard.fxml"));
+				FXMLLoader dashboardLoader = new FXMLLoader(Ambex.class.getResource("userdashboard.fxml"));
 				Parent dashboardParent = dashboardLoader.load();
 
 //				To pass the email & name to the user dashboard page
@@ -51,12 +57,9 @@ public class SignInController {
 	}
 
 	public void clickRegisterButton (ActionEvent event) throws IOException {
-		Parent signUpParent = FXMLLoader.load(HelloApplication.class.getResource("signup.fxml"));
-		Scene signUpScene = new Scene(signUpParent);
+		Parent signUpParent = new FXMLLoader().load(Ambex.class.getResource("signup.fxml"));
 
-		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-		window.setScene(signUpScene);
-		window.show();
+		basePane.getChildren().clear();
+		basePane.setCenter(signUpParent);
 	}
 }
