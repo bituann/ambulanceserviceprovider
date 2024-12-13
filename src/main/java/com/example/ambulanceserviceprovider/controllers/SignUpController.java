@@ -10,12 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +35,9 @@ public class SignUpController implements Initializable {
 	@FXML
 	private TextField signUpEmail;
 
+	@FXML
+	private BorderPane basePane;
+
 	@Override
 	public void initialize (URL url, ResourceBundle rb) {
 		try {
@@ -54,9 +55,11 @@ public class SignUpController implements Initializable {
 		}
 	}
 
-	public void goBackButton(ActionEvent event) throws IOException {
+	public void goBackButton() throws IOException {
 		Parent signUpParent = FXMLLoader.load(Ambex.class.getResource("signin.fxml"));
-		changeScene(signUpParent, event);
+
+		basePane.getChildren().clear();
+		basePane.setCenter(signUpParent);
 	}
 
 	public void registerUserButton (ActionEvent event) throws IOException, SQLException {
@@ -78,15 +81,7 @@ public class SignUpController implements Initializable {
 		dashboardController.setUserName(new UserModel().getUser(email).getName());
 		dashboardController.setUserEmail(email);
 
-		changeScene(dashboardParent, event);
-	}
-
-	private void changeScene (Parent parent, ActionEvent event) throws IOException {
-		Scene signUpScene = new Scene(parent);
-
-		Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-
-		window.setScene(signUpScene);
-		window.show();
+		basePane.getChildren().clear();
+		basePane.setCenter(dashboardParent);
 	}
 }
