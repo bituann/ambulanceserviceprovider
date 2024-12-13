@@ -1,27 +1,23 @@
 package com.example.ambulanceserviceprovider.controllers;
 
-import com.example.ambulanceserviceprovider.HelloApplication;
+import com.example.ambulanceserviceprovider.Ambex;
 import com.example.ambulanceserviceprovider.datatypes.User;
 import com.example.ambulanceserviceprovider.models.EmergencyModel;
 import com.example.ambulanceserviceprovider.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ResourceBundle;
 
 
 public class UserDashboardController {
@@ -55,7 +51,7 @@ public class UserDashboardController {
 	}
 
 	public void logOut(ActionEvent event) throws IOException {
-		Parent signInParent = FXMLLoader.load(HelloApplication.class.getResource("signin.fxml"));
+		Parent signInParent = FXMLLoader.load(Ambex.class.getResource("signin.fxml"));
 
 		changeScene(signInParent, event);
 	}
